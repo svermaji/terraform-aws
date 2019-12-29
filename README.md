@@ -1,6 +1,11 @@
 # Terraform
 
 > Will create multiple set of scripts for clarity.
+> Versioning: 
+>    - OS: Win10 Home
+>    - Terraform: v0.12.18
+>    - Packer: 1.5.1
+>    - AWS: aws-cli/1.16.303 Python/3.6.0 Windows/10 botocore/1.13.39
 
 ## 1-beginner 
 For details check my blog: [Begin with Terraform](http://sv-technical.blogspot.com/2019/12/terraform.html)<br>
