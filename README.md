@@ -10,3 +10,19 @@ This folder contains terraform sample scripts that
   - ami
   - ec2 etc
 
+Commands:
+ - terraform plan -no-color -refresh=true -out=infra.tfplan
+ - terraform apply -refresh=true -auto-approve "infra.tfplan"
+ - terraform destroy -auto-approve
+ 
+## 2-modules (and packer scripts) 
+This folder contains terraform sample scripts that
+  - terraform files arranged as modules
+  - outputs.tf is at root only as terraform 0.12+ does not support modules outputs
+  - packer scripts that creates ami after some script changes you want
+  - ec2 creates based on newly created by packer ami
+  - build-infra.bat that has packer and terraform commands to build complete infrastructure
+
+Commands:
+ - packer validate FILENAME
+ - packer build FILENAME
