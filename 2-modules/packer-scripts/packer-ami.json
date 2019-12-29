@@ -1,0 +1,47 @@
+{
+  "variables": {
+    "profile": "default",
+    "region": "eu-west-2"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "amzn-ami-hvm-2018.03.0.20190514-x86_64-ebs",
+        "root-device-type": "ebs"
+      },
+      "owners": ["amazon"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "packer-sv-ami-{{timestamp}}",
+    "tags": {
+      "Name": "Packer SV AMI {{timestamp}}",
+      "HSN": "packer-linux-sv-ami-{{timestamp}}"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "shell",
+      "script": "demo-script.sh"
+    },
+    {
+      "type": "file",
+      "source": "./packer-welcome-msg.txt",
+      "destination": "/home/ec2-user/"
+    },
+    {
+      "type": "shell",
+      "inline":[
+          "ls -al /home/ec2-user/",
+          "cat /home/ec2-user/packer-welcome-msg.txt"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "./packer-ami-cmds.sh"
+    }
+  ]
+}
