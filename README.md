@@ -1,6 +1,6 @@
 # Terraform
 
-## Will create multiple set of scripts for clarity.
+> Will create multiple set of scripts for clarity.
 
 ## 1-beginner 
 For details check my blog: [Begin with Terraform](http://sv-technical.blogspot.com/2019/12/terraform.html)<br>
@@ -11,9 +11,9 @@ This folder contains terraform sample scripts that
   - ec2 etc
 
 Commands:
- - terraform plan -no-color -refresh=true -out=infra.tfplan
- - terraform apply -refresh=true -auto-approve "infra.tfplan"
- - terraform destroy -auto-approve
+ - `terraform plan -no-color -refresh=true -out=infra.tfplan`
+ - `terraform apply -refresh=true -auto-approve "infra.tfplan"`
+ - `terraform destroy -auto-approve`
  
 ## 2-modules (and packer scripts) 
 This folder contains terraform sample scripts that
@@ -24,5 +24,5 @@ This folder contains terraform sample scripts that
   - build-infra.bat that has packer and terraform commands to build complete infrastructure
 
 Commands:
- - packer validate FILENAME
- - packer build FILENAME
+ - `packer validate FILENAME`
+ - `packer build FILENAME`
