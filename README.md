@@ -11,6 +11,7 @@
 For details check my blog: [Begin with Terraform](http://sv-technical.blogspot.com/2019/12/terraform.html)<br>
 This folder contains terraform sample scripts that
   - create roles, users (not using for security reasons)
+  - create instance using ssh
   - create groups
   - ami
   - ec2 etc
