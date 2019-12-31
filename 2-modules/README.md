@@ -1,1 +1,1 @@
-Root module for terraform - Packer
+Root module for terraform

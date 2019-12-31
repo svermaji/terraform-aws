@@ -5,7 +5,8 @@ resource "aws_instance" "sv_instance" {
   key_name      = aws_key_pair.sv_key_pair.key_name
   vpc_security_group_ids = ["${aws_security_group.allow_me_sg.id}"]
   depends_on = [aws_security_group.allow_me_sg]
-  #depends_on = [aws_ami.linux_ami]
+  subnet_id = aws_subnet.sv_subnet_pub_a.id
+  associate_public_ip_address = true
   tags = {
     Name = "sv-instance"
     HSN = "sv-ec2-instance" 
