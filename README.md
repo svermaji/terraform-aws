@@ -1,7 +1,7 @@
 # Terraform
 
 > Will create multiple set of scripts for clarity.
-> Versioning: 
+> Version details:
 >    - OS: Win10 Home
 >    - Terraform: v0.12.18
 >    - Packer: 1.5.1
@@ -10,9 +10,9 @@
 ## 1-beginner 
 For details check my blog: [Begin with Terraform](http://sv-technical.blogspot.com/2019/12/terraform.html)<br>
 This folder contains terraform sample scripts that
-  - create roles, users (not using for security reasons)
-  - create instance using ssh
-  - create groups
+  - creates roles, users (not using for security reasons)
+  - creates instance using ssh
+  - creates groups
   - ami
   - ec2 etc
 
@@ -27,8 +27,17 @@ This folder contains terraform sample scripts that
   - outputs.tf is at root only as terraform 0.12+ does not support modules outputs
   - packer scripts that creates ami after some script changes you want
   - ec2 creates based on newly created by packer ami
+  - make ec2 public and connect with public subnet so able to ssh without any inbound rule modification
   - build-infra.bat that has packer and terraform commands to build complete infrastructure
 
 Commands:
  - `packer validate FILENAME`
  - `packer build FILENAME`
+
+## 3-asg
+This folder contains terraform sample scripts that
+  - creates asg, elb, user-data, custom ssl
+  - EC2 attaches to ELB and ELB in-turns attaches to ASG
+    - User can access EC2 website via ELB on port 80 (http), port 443 (https), port 8000 (http).
+    - SSL is custom generated so you will experience ssl warning on port 443
+  - creates launch configuration

@@ -18,6 +18,13 @@ resource "aws_elb" "sv_elb" {
   listener {
     instance_port      = 80
     instance_protocol  = "http"
+    lb_port            = 80
+    lb_protocol        = "http"
+  }
+
+  listener {
+    instance_port      = 80
+    instance_protocol  = "http"
     lb_port            = 8000
     lb_protocol        = "http"
   }

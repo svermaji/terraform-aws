@@ -1,6 +1,7 @@
 
 locals {
   sg_cidr_block = ["88.109.149.34/32", "88.109.149.0/28"]
+  elb_cidr_block = ["88.109.149.34/32"]
 }
 
 resource "aws_security_group" "sv_ec2_sg" {
@@ -25,13 +26,35 @@ resource "aws_security_group" "sv_elb_sg" {
   }
 }
 
+resource "aws_security_group_rule" "allow_elb_http_in_8000" {
+  type            = "ingress"
+  description     = "inbound rule for http on custom port"
+  from_port       = 8000
+  to_port         = 8000
+  protocol        = "tcp"
+  cidr_blocks     = local.elb_cidr_block
+  security_group_id = aws_security_group.sv_elb_sg.id
+}
+
+# Unless this rule is not added traffic does not goes through
+# But this works for all protocols
+resource "aws_security_group_rule" "allow_elb_http_for_all_in" {
+  type            = "ingress"
+  description     = "inbound rule for http for all"
+  from_port       = 80
+  to_port         = 80
+  protocol        = "tcp"
+  cidr_blocks     = ["0.0.0.0/0"]
+  security_group_id = aws_security_group.sv_elb_sg.id
+}
+
 resource "aws_security_group_rule" "allow_elb_http_in" {
   type            = "ingress"
   description     = "inbound rule for http"
   from_port       = 80
   to_port         = 80
   protocol        = "tcp"
-  cidr_blocks     = local.sg_cidr_block
+  cidr_blocks     = local.elb_cidr_block
   security_group_id = aws_security_group.sv_elb_sg.id
 }
 
@@ -41,7 +64,7 @@ resource "aws_security_group_rule" "allow_elb_http_out" {
   from_port       = 80
   to_port         = 80
   protocol        = "tcp"
-  cidr_blocks     = local.sg_cidr_block
+  cidr_blocks     = local.elb_cidr_block
   security_group_id = aws_security_group.sv_elb_sg.id
 }
 
@@ -51,7 +74,7 @@ resource "aws_security_group_rule" "allow_elb_https_in" {
   from_port       = 443
   to_port         = 443
   protocol        = "tcp"
-  cidr_blocks     = local.sg_cidr_block
+  cidr_blocks     = local.elb_cidr_block
   security_group_id = aws_security_group.sv_elb_sg.id
 }
 
@@ -61,7 +84,7 @@ resource "aws_security_group_rule" "allow_elb_https_out" {
   from_port       = 443
   to_port         = 443
   protocol        = "tcp"
-  cidr_blocks     = local.sg_cidr_block
+  cidr_blocks     = local.elb_cidr_block
   security_group_id = aws_security_group.sv_elb_sg.id
 }
 
