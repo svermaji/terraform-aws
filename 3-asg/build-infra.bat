@@ -1,9 +1,5 @@
 cls
-d:
-cd \
-cd tf-scripts\packer-scripts
+call p
 call pv
 call pb
-cd ..
-call tp
-call ta
+call tpa

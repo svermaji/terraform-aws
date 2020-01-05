@@ -31,18 +31,18 @@ resource "aws_elb" "sv_elb" {
 
   health_check {
     # number of attempts
-    healthy_threshold   = 8
-    unhealthy_threshold = 8
+    healthy_threshold   = 4
+    unhealthy_threshold = 4
     # response time in sec
-    timeout             = 50
+    timeout             = 5
     target              = "HTTP:80/"
     # time between threshold calls in sec
     interval            = 60
   }
 
-  idle_timeout                = 600
+  idle_timeout                = 120
   connection_draining         = true
-  connection_draining_timeout = 600
+  connection_draining_timeout = 120
 
   tags = {
     Name = "sv-elb"
