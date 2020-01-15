@@ -1,0 +1,1 @@
+variable "pub_key_path" {}

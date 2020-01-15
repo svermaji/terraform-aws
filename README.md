@@ -41,3 +41,10 @@ This folder contains terraform sample scripts that
     - User can access EC2 website via ELB on port 80 (http), port 443 (https), port 8000 (http).
     - SSL is custom generated so you will experience ssl warning on port 443
   - creates launch configuration
+
+## 4-kms
+This folder contains terraform sample scripts that
+  - encrypt ami
+  - create kms key
+  - use default i.e. aws or custom managed kms key
+  - create and use custom managed kms key
