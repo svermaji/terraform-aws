@@ -8,7 +8,7 @@
 >    - AWS: aws-cli/1.16.303 Python/3.6.0 Windows/10 botocore/1.13.39
 
 ## 1-beginner 
-For details check my blog: http://sv-technical.blogspot.com/2019/12/terraform.html<br>
+For details check my blog: [Begin with Terraform](http://sv-technical.blogspot.com/2019/12/terraform.html)<br>
 This folder contains terraform sample scripts that
   - creates roles, users (not using for security reasons)
   - creates instance using ssh
@@ -48,9 +48,3 @@ This folder contains terraform sample scripts that
   - create kms key
   - use default i.e. aws or custom managed kms key
   - create and use custom managed kms key
-
-## 5-modules
-This folder contains terraform sample scripts that
-  - has proper steps for SSL
-  - create separate modules
-  - infra module managed so it can be called multiple times with param

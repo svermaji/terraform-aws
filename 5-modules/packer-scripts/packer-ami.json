@@ -1,0 +1,75 @@
+{
+  "variables": {
+    "profile": "default",
+    "region": "eu-west-2"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "amzn-ami-hvm-2018.03.0.20190514-x86_64-ebs",
+        "root-device-type": "ebs"
+      },
+      "owners": ["amazon"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "packer-sv-ami-{{timestamp}}",
+    "snapshot_tags": {
+      "Name": "Packer SV Snapshot {{timestamp}}",
+      "HSN": "packer-sv-snapshot-{{timestamp}}",
+      "description": "packer-sv-dd-snapshot-{{timestamp}}",
+      "Description": "packer-sv-DD-snapshot-{{timestamp}}"
+    },
+    "run_volume_tags": {
+      "Name": "Packer SV Vol {{timestamp}}",
+      "HSN": "packer-sv-vol-{{timestamp}}"
+    },
+    "tags": {
+      "Name": "Packer SV AMI {{timestamp}}",
+      "HSN": "packer-linux-sv-ami-{{timestamp}}"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./packer-welcome-msg.txt",
+      "destination": "/home/ec2-user/"
+    },
+    {
+      "type": "file",
+      "source": "./index.html",
+      "destination": "/home/ec2-user/"
+    },
+    {
+      "type": "file",
+      "source": "./favicon.ico",
+      "destination": "/home/ec2-user/"
+    },
+    {
+      "type": "shell",
+      "inline":[
+        "ls -al /home/ec2-user/",
+        "cat /home/ec2-user/packer-welcome-msg.txt"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "software-update-script.sh"
+    },
+    {
+      "type": "shell",
+      "inline":[
+        "echo 'Present directory is: '",
+        "pwd",
+        "ls -al /home/ec2-user/",
+        "sudo mv /home/ec2-user/index.html /var/www/html/",
+        "sudo mv /home/ec2-user/favicon.ico /var/www/html/",
+        "echo 'File moved. Doing ls to check...'",
+        "ls -al /home/ec2-user/"
+      ]
+    }
+  ]
+}
