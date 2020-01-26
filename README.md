@@ -49,8 +49,8 @@ This folder contains terraform sample scripts that
   - use default i.e. aws or custom managed kms key
   - create and use custom managed kms key
 
-## 5-modules
+## 5-separate-modules
 This folder contains terraform sample scripts that
   - has proper steps for SSL
-  - create separate modules
+  - create separate modules for admin tasks, iam and infra etc
   - infra module managed so it can be called multiple times with param
