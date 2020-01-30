@@ -54,3 +54,11 @@ This folder contains terraform sample scripts that
   - has proper steps for SSL
   - create separate modules for admin tasks, iam and infra etc
   - infra module managed so it can be called multiple times with param
+
+## 6-httpd-logs
+This folder contains terraform (packer) sample scripts that
+  - ami is changed to have custom httpd conf 
+  - configuration to disable logging for 
+    - (internal dummy connection)
+    - "ELB-HealthChecker/1.0"
+    - 408 (in-progress)
