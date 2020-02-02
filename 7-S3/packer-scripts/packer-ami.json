@@ -1,0 +1,121 @@
+{
+  "variables": {
+    "ec2_home": "/home/ec2-user/",
+    "profile": "default",
+    "region": "eu-west-2"
+  },
+  "builders": [{
+    "type": "amazon-ebs",
+    "source_ami_filter": {
+      "filters": {
+        "virtualization-type": "hvm",
+        "name": "amzn-ami-hvm-2018.03.0.20190514-x86_64-ebs",
+        "root-device-type": "ebs"
+      },
+      "owners": ["amazon"],
+      "most_recent": true
+    },
+    "instance_type": "t2.micro",
+    "ssh_username": "ec2-user",
+    "ami_name": "packer-sv-ami-{{timestamp}}",
+    "snapshot_tags": {
+      "Name": "Packer SV Snapshot {{timestamp}}",
+      "HSN": "packer-sv-snapshot-{{timestamp}}",
+      "description": "packer-sv-dd-snapshot-{{timestamp}}",
+      "Description": "packer-sv-DD-snapshot-{{timestamp}}"
+    },
+    "run_volume_tags": {
+      "Name": "Packer SV Vol {{timestamp}}",
+      "HSN": "packer-sv-vol-{{timestamp}}"
+    },
+    "tags": {
+      "Name": "Packer SV AMI {{timestamp}}",
+      "HSN": "packer-linux-sv-ami-{{timestamp}}"
+    }
+  }],
+  "provisioners": [
+    {
+      "type": "file",
+      "source": "./packer-welcome-msg.txt",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./index.html",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./logrotate/conf/httpd",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./logrotate-httpd.sh",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./httpd/conf/httpd.conf",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./favicon.ico",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "shell",
+      "inline":[
+        "cd {{user `ec2_home`}}",
+        "mkdir .aws",
+        "echo '.aws folder created'",
+        "ls -l -a",
+        "chmod 777 .aws",
+        "ls -l -a"
+      ]
+    },
+    {
+      "type": "file",
+      "source": "/aws/ec2-to-s3/config",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "/aws/ec2-to-s3/credentials",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "file",
+      "source": "./upload-logs-to-s3.sh",
+      "destination": "{{user `ec2_home`}}"
+    },
+    {
+      "type": "shell",
+      "inline":[
+        "ls -al {{user `ec2_home`}}",
+        "cat {{user `ec2_home`}}packer-welcome-msg.txt"
+      ]
+    },
+    {
+      "type": "shell",
+      "script": "software-update-script.sh"
+    },
+    {
+      "type": "shell",
+      "inline":[
+        "echo 'Present directory is: '",
+        "pwd",
+        "ls -al {{user `ec2_home`}}",
+        "sudo mv {{user `ec2_home`}}config .aws",
+        "sudo mv {{user `ec2_home`}}credentials .aws",
+        "sudo mv {{user `ec2_home`}}index.html /var/www/html/",
+        "sudo mv {{user `ec2_home`}}favicon.ico /var/www/html/",
+        "sudo mv {{user `ec2_home`}}httpd.conf /etc/httpd/conf/",
+        "sudo mv {{user `ec2_home`}}httpd /etc/logrotate.d/",
+        "echo 'File moved. Doing ls to check...'",
+        "ls -al {{user `ec2_home`}}"
+      ]
+    }
+  ]
+}

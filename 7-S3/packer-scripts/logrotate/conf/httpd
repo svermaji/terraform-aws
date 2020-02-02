@@ -1,0 +1,13 @@
+/var/log/httpd/*log {
+    rotate 5
+    maxage 5
+    dateext
+    dateformat -%Y%m%d-%s
+    missingok
+    notifempty
+    sharedscripts
+    compress
+    postrotate
+        /sbin/service httpd reload > /dev/null 2>/dev/null || true
+    endscript
+}

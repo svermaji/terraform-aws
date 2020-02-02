@@ -62,3 +62,19 @@ This folder contains terraform (packer) sample scripts that
     - (internal dummy connection)
     - "ELB-HealthChecker/1.0"
     - 408 (in-progress)
+
+## 7-S3
+This folder contains terraform sample scripts that
+  - has configuration to log rotate httpd logs 
+  - compress logs datewise and restart httpd after that  
+  - create S3 bucket
+  - configure EC2 to connect with S3  
+  - move logs to S3 bucket
+  - packer module updated to have httpd logrotate conf  
+  - scripts for logrotate and S£
+  - user data to configure aws
+  - Note: Four properties added to logrotate 
+      - rotate 5 -> So files after logrotate do not delete
+      - maxage 5 -> To keep rotate files for how many dates
+      - dateext -> To attach date to gzip files
+      - dateformat -%Y%m%d-%s -> format of date
