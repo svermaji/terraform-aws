@@ -1,3 +1,2 @@
 cls
-call t
-call td
+..\..\batch\tf.bat d

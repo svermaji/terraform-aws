@@ -1,6 +1,7 @@
 cls
-call p
-call pv
-call pb
-call t
-call tpa
+cd ..\packer-scripts
+..\..\batch\p.bat v
+..\..\batch\p.bat b
+cd ..\infra
+..\..\batch\tf.bat p
+..\..\batch\tf.bat a
